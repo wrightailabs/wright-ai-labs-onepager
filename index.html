@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wright AI Labs — AI Automation for HVAC Contractors</title>
+  <style>
+    :root {
+      --navy: #1E2A5E;
+      --navy-dark: #141c42;
+      --blue: #2563eb;
+      --blue-light: #eff6ff;
+      --green: #059669;
+      --green-light: #ecfdf5;
+      --orange: #ea580c;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, #2a4a9a 100%);
+      color: white;
+      padding: 48px 24px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(ellipse at 70% 30%, rgba(99,179,237,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .logo-area { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 20px; }
+    .logo-icon {
+      width: 52px; height: 52px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px;
+    }
+    .logo-text { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+    .logo-sub { font-size: 12px; opacity: 0.7; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+    .header h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 900; letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px; }
+    .header h1 span { color: #60a5fa; }
+    .header p { font-size: 18px; opacity: 0.85; max-width: 560px; margin: 0 auto 28px; line-height: 1.6; }
+    .header-cta {
+      display: inline-block;
+      background: #60a5fa;
+      color: var(--navy-dark);
+      font-weight: 800;
+      font-size: 15px;
+      padding: 14px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+    }
+
+    /* CONTAINER */
+    .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    /* PROBLEM SECTION */
+    .problem {
+      background: #fef2f2;
+      border-top: 4px solid #ef4444;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .problem h2 { font-size: 22px; font-weight: 800; color: #991b1b; margin-bottom: 12px; }
+    .problem p { color: #7f1d1d; font-size: 16px; line-height: 1.7; max-width: 640px; margin: 0 auto 24px; }
+    .problem-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .stat-pill {
+      background: #fee2e2;
+      border: 1px solid #fca5a5;
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #991b1b;
+    }
+
+    /* SECTION */
+    section { padding: 56px 0; }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .section-title { font-size: clamp(22px, 4vw, 32px); font-weight: 900; letter-spacing: -0.5px; margin-bottom: 12px; }
+    .section-sub { font-size: 16px; color: var(--muted); line-height: 1.6; max-width: 600px; }
+
+    /* FEATURES GRID */
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 36px; }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      transition: box-shadow 0.2s;
+    }
+    .feature-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+    .feature-icon { font-size: 28px; margin-bottom: 14px; }
+    .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .feature-outcome {
+      margin-top: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--green);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* QUOTE */
+    .quote-section {
+      background: linear-gradient(135deg, var(--navy) 0%, #2a4a9a 100%);
+      color: white;
+      padding: 56px 24px;
+      text-align: center;
+    }
+    .quote-text { font-size: clamp(20px, 3vw, 28px); font-weight: 700; font-style: italic; line-height: 1.4; margin-bottom: 20px; max-width: 640px; margin-left: auto; margin-right: auto; }
+    .quote-attr { font-size: 14px; opacity: 0.7; }
+
+    /* PRICING */
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 36px; }
+    .plan-card {
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 20px;
+      position: relative;
+    }
+    .plan-card.featured {
+      border-color: var(--blue);
+      box-shadow: 0 8px 32px rgba(37,99,235,0.12);
+    }
+    .plan-badge {
+      position: absolute;
+      top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--blue);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 50px;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .plan-name { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .plan-price { font-size: 32px; font-weight: 900; color: var(--navy); letter-spacing: -1px; }
+    .plan-price span { font-size: 14px; font-weight: 500; color: var(--muted); }
+    .plan-divider { height: 1px; background: var(--border); margin: 16px 0; }
+    .plan-feature { font-size: 13px; color: var(--text); padding: 5px 0; display: flex; align-items: flex-start; gap: 8px; }
+    .plan-feature .check { color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .plan-feature .x { color: #d1d5db; flex-shrink: 0; }
+
+    /* AGENCY */
+    .agency-section {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 1px solid #bae6fd;
+      border-radius: 20px;
+      padding: 40px;
+      margin-top: 48px;
+    }
+    .agency-section h3 { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 10px; }
+    .agency-section p { color: var(--muted); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+    .agency-math {
+      background: white;
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+    }
+    .math-item { text-align: center; }
+    .math-num { font-size: 24px; font-weight: 900; color: var(--navy); }
+    .math-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* CTA */
+    .cta-section { background: var(--navy-dark); color: white; padding: 60px 24px; text-align: center; }
+    .cta-section h2 { font-size: 28px; font-weight: 900; margin-bottom: 12px; }
+    .cta-section p { opacity: 0.8; margin-bottom: 32px; font-size: 16px; }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #60a5fa;
+      color: var(--navy-dark);
+      font-weight: 800;
+      padding: 14px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 15px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* FOOTER */
+    footer { background: #0f172a; color: rgba(255,255,255,0.5); text-align: center; padding: 24px; font-size: 13px; }
+    footer strong { color: rgba(255,255,255,0.8); }
+
+    @media (max-width: 600px) {
+      .header { padding: 36px 16px 44px; }
+      section { padding: 40px 0; }
+      .agency-section { padding: 28px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="logo-area">
+    <div class="logo-icon">⚡</div>
+    <div>
+      <div class="logo-text">Wright AI Labs</div>
+      <div class="logo-sub">AI Automation Platform</div>
+    </div>
+  </div>
+  <h1>Your Business Runs Itself.<br><span>You Focus on the Work.</span></h1>
+  <p>AI-powered voice assistant, lead automation, revenue recovery, and business intelligence — built for HVAC & home service contractors.</p>
+  <a href="mailto:dennis@wrightailabs.com" class="header-cta">Book a Free Demo →</a>
+</div>
+
+<!-- PROBLEM -->
+<div class="problem">
+  <div class="container">
+    <h2>Every Day You Don't Follow Up Is Revenue Walking Out the Door</h2>
+    <p>Your leads go cold overnight. Your estimates sit unclosed for weeks. Your invoices go unpaid for months. And you're too busy running jobs to chase any of it.</p>
+    <div class="problem-stats">
+      <div class="stat-pill">⏱ Avg response time: 3+ hours</div>
+      <div class="stat-pill">📋 30%+ of estimates never followed up</div>
+      <div class="stat-pill">💸 Overdue invoices aging 60–90 days</div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section>
+  <div class="container">
+    <div class="section-label">What Claire Does</div>
+    <div class="section-title">Every Lead Called. Every Estimate Followed Up. Every Invoice Chased.</div>
+    <div class="section-sub">Claire is your AI business system — not a chatbot, not a form, a real voice that calls, qualifies, books, and recovers revenue automatically.</div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">📞</div>
+        <h3>Never Miss a Call</h3>
+        <p>Claire answers every inbound call 24/7, qualifies the lead, and books the appointment directly into your system.</p>
+        <div class="feature-outcome">✓ Zero missed opportunities</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>60-Second Lead Response</h3>
+        <p>New Angi or web lead? Claire calls within 60 seconds during business hours. Overnight leads get a call at 8 AM sharp. First to call wins the job.</p>
+        <div class="feature-outcome">✓ 3–5x higher lead conversion</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Recover Lost Revenue</h3>
+        <p>Estimates cold after 7, 14, or 30 days? Claire calls automatically. Overdue invoices? Escalating contact sequence — no awkward calls for your team.</p>
+        <div class="feature-outcome">✓ More closed jobs, faster payments</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>See Everything</h3>
+        <p>Six live dashboards show open estimates, ad performance, customer lifetime value, collections, and daily operations. Refreshed hourly.</p>
+        <div class="feature-outcome">✓ Full visibility, no spreadsheets</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📣</div>
+        <h3>Smarter Ad Spend</h3>
+        <p>Every completed job fires attribution data back to Meta automatically. Your ads get smarter over time, lowering your cost per lead.</p>
+        <div class="feature-outcome">✓ Better ROAS, lower CPL</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌅</div>
+        <h3>Morning Briefing</h3>
+        <p>Every morning you receive a plain-English summary — what Claire did overnight, leads called, estimates followed up, invoices chased.</p>
+        <div class="feature-outcome">✓ Always know what's happening</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section">
+  <div class="container">
+    <div class="quote-text">"891 Angi leads. Now every single one gets called automatically."</div>
+    <div class="quote-attr">— Jason Holder, President · Weather Masters of Georgia · Kennesaw, GA</div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<section>
+  <div class="container">
+    <div class="section-label">Plans & Pricing</div>
+    <div class="section-title">Simple, Transparent Pricing</div>
+    <div class="section-sub">No long-term contracts. Cancel anytime. Every plan includes setup, onboarding, and ongoing support.</div>
+
+    <div class="pricing-grid">
+      <div class="plan-card">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">$498<span>/mo</span></div>
+        <div class="plan-divider"></div>
+        <div class="plan-feature"><span class="check">✓</span> Claire Inbound Voice AI</div>
+        <div class="plan-feature"><span class="check">✓</span> Lead Notifications</div>
+        <div class="plan-feature"><span class="check">✓</span> Claire Status Dashboard</div>
+        <div class="plan-feature"><span class="check">✓</span> Standard Support</div>
+        <div class="plan-feature"><span class="x">–</span> Outbound Calling</div>
+        <div class="plan-feature"><span class="x">–</span> Estimate Follow-Up</div>
+        <div class="plan-feature"><span class="x">–</span> Collections</div>
+        <div class="plan-feature"><span class="x">–</span> BI Dashboards</div>
+      </div>
+
+      <div class="plan-card featured">
+        <div class="plan-badge">⭐ Most Popular</div>
+        <div class="plan-name">Growth</div>
+        <div class="plan-price">$998<span>/mo</span></div>
+        <div class="plan-divider"></div>
+        <div class="plan-feature"><span class="check">✓</span> Claire Inbound + Outbound</div>
+        <div class="plan-feature"><span class="check">✓</span> Lead Response Automation</div>
+        <div class="plan-feature"><span class="check">✓</span> Estimate Follow-Up</div>
+        <div class="plan-feature"><span class="check">✓</span> Collections Automation</div>
+        <div class="plan-feature"><span class="check">✓</span> Full BI Suite (6 dashboards)</div>
+        <div class="plan-feature"><span class="check">✓</span> Meta CAPI Attribution</div>
+        <div class="plan-feature"><span class="check">✓</span> Daily Morning Report</div>
+        <div class="plan-feature"><span class="check">✓</span> Priority Support</div>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-name">Business Intelligence</div>
+        <div class="plan-price">$1,498<span>/mo</span></div>
+        <div class="plan-divider"></div>
+        <div class="plan-feature"><span class="check">✓</span> Everything in Growth</div>
+        <div class="plan-feature"><span class="check">✓</span> Customer LTV Analysis</div>
+        <div class="plan-feature"><span class="check">✓</span> Team Performance Reports</div>
+        <div class="plan-feature"><span class="check">✓</span> Custom Dashboards</div>
+        <div class="plan-feature"><span class="check">✓</span> Monthly Strategy Call</div>
+      </div>
+
+      <div class="plan-card">
+        <div class="plan-name">Agentic</div>
+        <div class="plan-price">$2,500<span>/mo+</span></div>
+        <div class="plan-divider"></div>
+        <div class="plan-feature"><span class="check">✓</span> Everything in BI</div>
+        <div class="plan-feature"><span class="check">✓</span> Autonomous Lead Queue</div>
+        <div class="plan-feature"><span class="check">✓</span> Revenue Recovery Agent</div>
+        <div class="plan-feature"><span class="check">✓</span> Appointment Optimizer</div>
+        <div class="plan-feature"><span class="check">✓</span> Reactivation Campaigns</div>
+        <div class="plan-feature"><span class="check">✓</span> Dedicated Account Mgr</div>
+      </div>
+    </div>
+
+    <!-- AGENCY -->
+    <div class="agency-section">
+      <h3>🏢 For Marketing Agencies</h3>
+      <p>White-label Claire under your brand. Your HVAC clients get better close rates — you get a new recurring revenue stream with strong margins. Pricing starts at $1,500/mo for up to 5 client seats.</p>
+      <div class="agency-math">
+        <div class="math-item">
+          <div class="math-num">10</div>
+          <div class="math-label">Client Seats</div>
+        </div>
+        <div class="math-item">
+          <div class="math-num">$1,000</div>
+          <div class="math-label">Avg Client Charge</div>
+        </div>
+        <div class="math-item">
+          <div class="math-num">$7,500</div>
+          <div class="math-label">Monthly Profit</div>
+        </div>
+        <div class="math-item">
+          <div class="math-num">75%</div>
+          <div class="math-label">Margin</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <h2>Ready to See Claire in Action?</h2>
+    <p>15-minute demo. No pressure. We'll show you exactly what it would look like for your business.</p>
+    <div class="cta-buttons">
+      <a href="mailto:dennis@wrightailabs.com" class="btn-primary">Book a Demo →</a>
+      <a href="mailto:dennis@wrightailabs.com" class="btn-secondary">Ask a Question</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <strong>Wright AI Labs</strong> · dennis@wrightailabs.com · wrightailabs.com<br>
+  <span>AI Automation Built for the Trades · Atlanta, GA</span>
+</footer>
+
+</body>
+</html>
