@@ -40,13 +40,7 @@
       pointer-events: none;
     }
     .logo-area { display: flex; align-items: center; justify-content: center; gap: 14px; margin-bottom: 20px; }
-    .logo-icon {
-      width: 52px; height: 52px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 26px;
-    }
+    .logo-img { height: 52px; width: auto; }
     .logo-text { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
     .logo-sub { font-size: 12px; opacity: 0.7; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
     .header h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 900; letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px; }
@@ -227,11 +221,7 @@
 <!-- HEADER -->
 <div class="header">
   <div class="logo-area">
-    <div class="logo-icon">⚡</div>
-    <div>
-      <div class="logo-text">Wright AI Labs</div>
-      <div class="logo-sub">AI Automation Platform</div>
-    </div>
+    <img src="logo.png" alt="Wright AI Labs" class="logo-img"/>
   </div>
   <h1>Your Business Runs Itself.<br><span>You Focus on the Work.</span></h1>
   <p>AI-powered voice assistant, lead automation, revenue recovery, and business intelligence — built for HVAC & home service contractors.</p>
